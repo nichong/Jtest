@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+
+    <!--aop增强-->
+    <bean id="zq" class="spring.test001.AopZengqiang"></bean>
+    <bean id="logHandler" class="spring.test001.LogHandler" />
+
+    <aop:config>
+        <aop:aspect id="log" ref="logHandler">
+            <aop:pointcut id="printLog" expression="execution(* spring.test001.UserServiceImpl.*(..))" />
+            <aop:before method="LogBefore" pointcut-ref="printLog" />
+            <aop:after method="LogAfter" pointcut-ref="printLog" />
+        </aop:aspect>
+
+
+        <aop:aspect id="zqd" ref="zq" ><!--order="1"-->
+            <aop:pointcut id="addTime" expression="execution(* spring.test001.UserServiceImpl.*(..))" />
+            <aop:before method="printTime" pointcut-ref="addTime" />
+            <aop:after method="printTime" pointcut-ref="addTime" />
+        </aop:aspect>
+
+
+    </aop:config>
+</beans>

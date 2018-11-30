@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="hellormi" class="com.wh.test.hello001.hellormi.HellormiImpl"></bean>
+    <!-- 将一个类发布为一个RMI服务 -->
+    <bean id="hellormiServer"  class="org.springframework.remoting.rmi.RmiServiceExporter">
+        <property name="serviceName" value="helloRMI"></property>
+        <property name="service" ref="hellormi"></property>
+        <property name="serviceInterface" value="com.wh.test.hello001.hellormi.Hellormi"></property>
+        <property name="registryPort" value="9999"></property>
+    </bean>
+
+
+</beans>
